@@ -7,11 +7,11 @@ interface ChipProps {
   onClick: () => void;
 }
 
-export const Chip = ({
+export const Chip: React.FC<ChipProps> = ({
   label,
   selected = false,
   onClick
-}: ChipProps) => {
+}) => {
   return (
     <button
       className={`${styles.chip} ${selected ? styles.selected : ""}`}
