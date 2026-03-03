@@ -10,7 +10,7 @@ interface ChipProps {
 export const Chip: React.FC<ChipProps> = ({
   label,
   selected = false,
-  onClick
+  onClick,
 }) => {
   return (
     <button

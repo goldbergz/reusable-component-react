@@ -1,9 +1,4 @@
-import React, {
-  useRef,
-  useLayoutEffect,
-  useState,
-  useEffect,
-} from "react";
+import React, { useRef, useLayoutEffect, useState, useEffect } from "react";
 import { Chip } from "./Chip";
 import styles from "./ChipList.module.css";
 
@@ -55,41 +50,40 @@ export const ChipList: React.FC<Props> = ({ items }) => {
     return () => observer.disconnect();
   }, []);
 
-  const visible = items.slice(0, visibleCount);
-  const hidden = items.slice(visibleCount);
+  const hiddenStart = visibleCount;
 
   return (
     <div className={styles.wrapper} ref={containerRef}>
       <div className={styles.row}>
-        {visible.map((item, index) => (
-          <div
-            key={item.id}
-            ref={(el) => {
-  chipsRef.current[index] =
-    el?.querySelector("button") || null;
-}}
-          >
-            <Chip
-              label={item.label}
-              selected={selectedId === item.id}
-              onClick={() => setSelectedId(item.id)}
-            />
-          </div>
-        ))}
+        {items.map((item, index) => {
+          const isHidden = index >= hiddenStart;
+          return (
+            <div
+              key={item.id}
+              className={isHidden ? styles.hiddenChip : undefined}
+              ref={(el) => {
+                chipsRef.current[index] = el?.querySelector("button") || null;
+              }}
+            >
+              <Chip
+                label={item.label}
+                selected={selectedId === item.id}
+                onClick={() => setSelectedId(item.id)}
+              />
+            </div>
+          );
+        })}
 
-        {hidden.length > 0 && (
-          <button
-            className={styles.more}
-            onClick={() => setIsOpen(!isOpen)}
-          >
+        {visibleCount < items.length && (
+          <button className={styles.more} onClick={() => setIsOpen(!isOpen)}>
             ...
           </button>
         )}
       </div>
 
-      {isOpen && hidden.length > 0 && (
+      {isOpen && visibleCount < items.length && (
         <div className={styles.popup}>
-          {hidden.map((item) => (
+          {items.slice(visibleCount).map((item) => (
             <Chip
               key={item.id}
               label={item.label}

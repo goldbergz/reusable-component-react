@@ -1,7 +1,7 @@
 import { ChipList } from "./components/ChipList";
 
 function App() {
-   const chips = Array.from({ length: 13 }, (_, i) => ({
+  const chips = Array.from({ length: 13 }, (_, i) => ({
     id: String(i),
     label: `Чипс ${i + 1}`,
   }));
@@ -11,7 +11,6 @@ function App() {
       <ChipList items={chips} />
     </div>
   );
-
 }
 
-export default App
+export default App;

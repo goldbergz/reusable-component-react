@@ -30,3 +30,9 @@
   gap: 8px;
   z-index: 10;
 }
+
+.hiddenChip {
+  position: absolute;
+  visibility: hidden;
+  pointer-events: none;
+}
